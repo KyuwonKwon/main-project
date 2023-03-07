@@ -1,0 +1,168 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type User {
+  id: String!
+  name: String!
+  phone: String!
+  email: String!
+  personal: String!
+  logId: String!
+  password: String!
+}
+
+type UserWithoutPw {
+  id: String!
+  name: String!
+  phone: String!
+  email: String!
+  personal: String!
+  logId: String!
+}
+
+type ProductMainCategory {
+  id: String!
+  name: String!
+}
+
+type ProductSubCategory {
+  id: String!
+  name: String!
+  productMainCategory: ProductMainCategory!
+}
+
+type ProductAllergy {
+  id: String!
+  name: String!
+  products: [Product!]!
+}
+
+type ProductNutritionFacts {
+  id: String!
+  servingsPerContainer: Float!
+  unitOfServingsPerContainer: String!
+  caffeine: Float!
+  kcal: Float!
+  Na: Float!
+  sugars: Float!
+  saturatedFat: Float!
+  protein: Float!
+}
+
+type ProductImage {
+  id: String!
+  Url: String!
+}
+
+type Product {
+  id: String!
+  koName: String!
+  enName: String!
+  description: String!
+  price: Int!
+  isNew: Boolean!
+  stock: Int!
+  productNutritionFacts: ProductNutritionFacts!
+  productSubCategory: ProductSubCategory!
+  productAllergies: [ProductAllergy!]!
+  productImage: ProductImage!
+}
+
+type UserOrderlist {
+  id: String!
+  totalCost: Float!
+  user: User!
+}
+
+type Query {
+  fetchUser: String!
+  fetchProducts: [Product!]!
+  fetchProductsWithDeleted: [Product!]!
+  fetchProduct(productId: String!): Product!
+  fetchLoginUser: String!
+  fetchUsers: [UserWithoutPw!]!
+  fetchUsersWithDeleted: [UserWithoutPw!]!
+}
+
+type Mutation {
+  login(logId: String!, password: String!): String!
+  createProduct(createProductInput: CreateProductInput!): Product!
+  updateProduct(productId: String!, updateProductInput: UpdateProductInput!): Product!
+  deleteProduct(productId: String!): Boolean!
+  restoreProduct(productId: String!): Boolean!
+  deleteLoginUser: Boolean!
+  updateUserPwd(newPwd: UpdateUserInput!): UserWithoutPw!
+  createUser(createUserInput: CreateUserInput!): UserWithoutPw!
+  createUserAddress(userId: String!, createUserAddressInput: CreateUserAddressInput!): UserWithoutPw!
+  restoreUser(userId: String!): Boolean!
+}
+
+input CreateProductInput {
+  koName: String!
+  enName: String!
+  description: String!
+  price: Int!
+  isNew: Boolean!
+  stock: Int!
+  productNutritionFactsInput: ProductNutritionFactsInput!
+  productSubCategoryInput: ProductSubCategoryInput!
+  productImageInput: ProductImageInput!
+  productAllergies: [String!]!
+}
+
+input ProductNutritionFactsInput {
+  servingsPerContainer: Float!
+  unitOfServingsPerContainer: String!
+  caffeine: Float!
+  kcal: Float!
+  Na: Float!
+  sugars: Float!
+  saturatedFat: Float!
+  protein: Float!
+}
+
+input ProductSubCategoryInput {
+  name: String!
+  productMainCategoryName: String!
+}
+
+input ProductImageInput {
+  Url: String!
+}
+
+input UpdateProductInput {
+  koName: String
+  enName: String
+  description: String
+  price: Int
+  isNew: Boolean
+  stock: Int
+  productNutritionFactsInput: ProductNutritionFactsInput
+  productSubCategoryInput: ProductSubCategoryInput
+  productImageInput: ProductImageInput
+  productAllergies: [String!]
+}
+
+input UpdateUserInput {
+  name: String
+  phone: String
+  email: String
+  personal: String
+  logId: String
+  password: String
+}
+
+input CreateUserInput {
+  name: String!
+  phone: String!
+  email: String!
+  personal: String!
+  logId: String!
+  password: String!
+}
+
+input CreateUserAddressInput {
+  name: String!
+  isMain: Boolean!
+}
