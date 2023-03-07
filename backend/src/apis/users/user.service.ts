@@ -9,7 +9,7 @@ import { Repository } from 'typeorm';
 import { UserAddress } from '../usersAddress/entities/userAddress.entity';
 import { UserPurchaseItem } from '../usersPurchaseItem/entities/userPurchaseItem.entity';
 import { User } from './entities/user.entity';
-
+import * as bcrypt from 'bcrypt';
 @Injectable()
 export class UserService {
   constructor(
@@ -50,10 +50,17 @@ export class UserService {
     if (prevUser) {
       throw new UnprocessableEntityException('이미 가입된 계정이 있습니다.');
     } else {
+      const hashedPassword = await bcrypt.hash(createUserInput.password, 10);
+      const hasedPersonal = await bcrypt.hash(createUserInput.personal, 10);
+      createUserInput = {
+        ...createUserInput,
+        password: hashedPassword,
+        personal: hasedPersonal,
+      };
       const { password, ...newUser } = await this.userRepository.save(
         createUserInput,
       );
-      return { ...newUser };
+      return newUser;
     }
   }
 

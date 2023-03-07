@@ -76,26 +76,35 @@ type UserOrderlist {
 }
 
 type Query {
-  fetchUser: String!
+  fetchLoginUser: String!
   fetchProducts: [Product!]!
   fetchProductsWithDeleted: [Product!]!
   fetchProduct(productId: String!): Product!
-  fetchLoginUser: String!
   fetchUsers: [UserWithoutPw!]!
   fetchUsersWithDeleted: [UserWithoutPw!]!
 }
 
 type Mutation {
   login(logId: String!, password: String!): String!
+  restoreAccessToken: String!
+  deleteLoginUser: Boolean!
+  updateUserPwd(newPwd: UpdateUserInput!): UserWithoutPw!
   createProduct(createProductInput: CreateProductInput!): Product!
   updateProduct(productId: String!, updateProductInput: UpdateProductInput!): Product!
   deleteProduct(productId: String!): Boolean!
   restoreProduct(productId: String!): Boolean!
-  deleteLoginUser: Boolean!
-  updateUserPwd(newPwd: UpdateUserInput!): UserWithoutPw!
   createUser(createUserInput: CreateUserInput!): UserWithoutPw!
   createUserAddress(userId: String!, createUserAddressInput: CreateUserAddressInput!): UserWithoutPw!
   restoreUser(userId: String!): Boolean!
+}
+
+input UpdateUserInput {
+  name: String
+  phone: String
+  email: String
+  personal: String
+  logId: String
+  password: String
 }
 
 input CreateProductInput {
@@ -142,15 +151,6 @@ input UpdateProductInput {
   productSubCategoryInput: ProductSubCategoryInput
   productImageInput: ProductImageInput
   productAllergies: [String!]
-}
-
-input UpdateUserInput {
-  name: String
-  phone: String
-  email: String
-  personal: String
-  logId: String
-  password: String
 }
 
 input CreateUserInput {

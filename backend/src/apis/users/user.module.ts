@@ -1,6 +1,5 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { JwtAccessStrategy } from 'src/commons/auth/jwt-access.strategy';
 import { UserAddress } from '../usersAddress/entities/userAddress.entity';
 import { UserOrderlist } from '../usersOrderlist/entities/userOrderlist.entity';
 import { UserPurchaseItem } from '../usersPurchaseItem/entities/userPurchaseItem.entity';
@@ -18,8 +17,7 @@ import { UserService } from './user.service';
     ]),
   ],
   providers: [
-    JwtAccessStrategy, //
-    UserResolver,
+    UserResolver, //
     UserService,
   ],
 })
