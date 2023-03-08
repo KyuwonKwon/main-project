@@ -10,5 +10,7 @@ export declare class AuthController {
     private readonly authService;
     constructor(userService: UserService, authService: AuthService);
     loginGoogle(req: Request & IOAuthUser, res: Response): Promise<void>;
+    loginNaver(req: Request & IOAuthUser, res: Response): Promise<void>;
+    loginKakao(req: Request & IOAuthUser, res: Response): Promise<void>;
 }
 export {};

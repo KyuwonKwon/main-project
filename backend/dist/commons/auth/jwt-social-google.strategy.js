@@ -3,11 +3,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.JwtGoogleStrategy = void 0;
 const passport_1 = require("@nestjs/passport");
 const passport_google_oauth20_1 = require("passport-google-oauth20");
+require("dotenv/config");
 class JwtGoogleStrategy extends (0, passport_1.PassportStrategy)(passport_google_oauth20_1.Strategy, 'google') {
     constructor() {
         super({
-            clientID: '256318950910-e8cifdmvvlnrubpt5nvna30rd5qfqb6t.apps.googleusercontent.com',
-            clientSecret: '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',
+            clientID: process.env.GOOGLE_CLIENT_ID,
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET,
             callbackURL: 'http://localhost:3000/login/google',
             scope: ['email', 'profile'],
         });

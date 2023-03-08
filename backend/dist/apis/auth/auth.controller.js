@@ -39,6 +39,40 @@ let AuthController = class AuthController {
         this.authService.setRefreshToken({ user, res });
         res.redirect('http://localhost:5500/frontend/login/index.html');
     }
+    async loginNaver(req, res) {
+        let user = await this.userService.findOne({ logId: req.user.logId });
+        if (!user) {
+            user = await this.userService.createUser({
+                createUserInput: {
+                    email: req.user.email,
+                    password: req.user.password,
+                    phone: req.user.phone,
+                    name: req.user.name,
+                    logId: req.user.logId,
+                    personal: req.user.personal,
+                },
+            });
+        }
+        this.authService.setRefreshToken({ user, res });
+        res.redirect('http://localhost:5500/frontend/login/index.html');
+    }
+    async loginKakao(req, res) {
+        let user = await this.userService.findOne({ logId: req.user.logId });
+        if (!user) {
+            user = await this.userService.createUser({
+                createUserInput: {
+                    email: req.user.email,
+                    password: req.user.password,
+                    phone: req.user.phone,
+                    name: req.user.name,
+                    logId: req.user.logId,
+                    personal: req.user.personal,
+                },
+            });
+        }
+        this.authService.setRefreshToken({ user, res });
+        res.redirect('http://localhost:5500/frontend/login/index.html');
+    }
 };
 __decorate([
     (0, common_1.Get)('/login/google'),
@@ -49,6 +83,24 @@ __decorate([
     __metadata("design:paramtypes", [Object, Object]),
     __metadata("design:returntype", Promise)
 ], AuthController.prototype, "loginGoogle", null);
+__decorate([
+    (0, common_1.Get)('/login/naver'),
+    (0, common_1.UseGuards)((0, passport_1.AuthGuard)('naver')),
+    __param(0, (0, common_1.Req)()),
+    __param(1, (0, common_1.Res)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:returntype", Promise)
+], AuthController.prototype, "loginNaver", null);
+__decorate([
+    (0, common_1.Get)('/login/kakao'),
+    (0, common_1.UseGuards)((0, passport_1.AuthGuard)('kakao')),
+    __param(0, (0, common_1.Req)()),
+    __param(1, (0, common_1.Res)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:returntype", Promise)
+], AuthController.prototype, "loginKakao", null);
 AuthController = __decorate([
     (0, common_1.Controller)(),
     __metadata("design:paramtypes", [user_service_1.UserService,

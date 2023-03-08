@@ -13,6 +13,8 @@ const typeorm_1 = require("@nestjs/typeorm");
 const jwt_access_strategy_1 = require("../../commons/auth/jwt-access.strategy");
 const jwt_refresh_strategy_1 = require("../../commons/auth/jwt-refresh.strategy");
 const jwt_social_google_strategy_1 = require("../../commons/auth/jwt-social-google.strategy");
+const jwt_social_kakao_strategy_1 = require("../../commons/auth/jwt-social-kakao.strategy");
+const jwt_social_naver_strategy_1 = require("../../commons/auth/jwt-social-naver.strategy");
 const user_entity_1 = require("../users/entities/user.entity");
 const user_service_1 = require("../users/user.service");
 const userAddress_entity_1 = require("../usersAddress/entities/userAddress.entity");
@@ -38,6 +40,8 @@ AuthModule = __decorate([
             jwt_refresh_strategy_1.JwtRefreshStrategy,
             jwt_access_strategy_1.JwtAccessStrategy,
             jwt_social_google_strategy_1.JwtGoogleStrategy,
+            jwt_social_naver_strategy_1.JwtNaverStrategy,
+            jwt_social_kakao_strategy_1.JwtKakaoStrategy,
             auth_resolver_1.AuthResolver,
             auth_service_1.AuthService,
             user_service_1.UserService,
