@@ -14,9 +14,6 @@ class JwtGoogleStrategy extends (0, passport_1.PassportStrategy)(passport_google
         });
     }
     validate(accessToken, refreshToken, profile) {
-        console.log(accessToken);
-        console.log(refreshToken);
-        console.log(profile);
         return {
             email: profile.emails[0].value,
             logId: 'q1q1',

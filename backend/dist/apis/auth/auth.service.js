@@ -12,9 +12,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthService = void 0;
 const common_1 = require("@nestjs/common");
 const jwt_1 = require("@nestjs/jwt");
+const user_service_1 = require("../users/user.service");
 let AuthService = class AuthService {
-    constructor(jwtService) {
+    constructor(jwtService, userService) {
         this.jwtService = jwtService;
+        this.userService = userService;
     }
     setRefreshToken({ user, res }) {
         const refreshToken = this.jwtService.sign({ logId: user.logId, sub: user.id }, { secret: 'myRefreshKey', expiresIn: '2w' });
@@ -23,10 +25,28 @@ let AuthService = class AuthService {
     getAccessToken({ user }) {
         return this.jwtService.sign({ logId: user.logId, sub: user.id }, { secret: 'myAccessKey', expiresIn: '10s' });
     }
+    async oauthLogin(req, res) {
+        let user = await this.userService.findOne({ logId: req.user.logId });
+        if (!user) {
+            user = await this.userService.createUser({
+                createUserInput: {
+                    email: req.user.email,
+                    password: req.user.password,
+                    phone: req.user.phone,
+                    name: req.user.name,
+                    logId: req.user.logId,
+                    personal: req.user.personal,
+                },
+            });
+        }
+        this.setRefreshToken({ user, res });
+        res.redirect('http://localhost:5500/frontend/login/index.html');
+    }
 };
 AuthService = __decorate([
     (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [jwt_1.JwtService])
+    __metadata("design:paramtypes", [jwt_1.JwtService,
+        user_service_1.UserService])
 ], AuthService);
 exports.AuthService = AuthService;
 //# sourceMappingURL=auth.service.js.map

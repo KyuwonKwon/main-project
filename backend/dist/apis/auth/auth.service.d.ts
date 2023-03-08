@@ -1,7 +1,9 @@
 import { JwtService } from '@nestjs/jwt';
+import { UserService } from '../users/user.service';
 export declare class AuthService {
     private readonly jwtService;
-    constructor(jwtService: JwtService);
+    private readonly userService;
+    constructor(jwtService: JwtService, userService: UserService);
     setRefreshToken({ user, res }: {
         user: any;
         res: any;
@@ -9,4 +11,5 @@ export declare class AuthService {
     getAccessToken({ user }: {
         user: any;
     }): string;
+    oauthLogin(req: any, res: any): Promise<void>;
 }

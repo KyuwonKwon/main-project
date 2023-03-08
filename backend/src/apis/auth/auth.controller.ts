@@ -2,7 +2,6 @@ import { Controller, Get, Req, Res, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { Request, Response } from 'express';
 import { User } from '../users/entities/user.entity';
-import { UserService } from '../users/user.service';
 import { AuthService } from './auth.service';
 
 interface IOAuthUser {
@@ -14,10 +13,7 @@ interface IOAuthUser {
 
 @Controller()
 export class AuthController {
-  constructor(
-    private readonly userService: UserService,
-    private readonly authService: AuthService,
-  ) {}
+  constructor(private readonly authService: AuthService) {}
 
   @Get('/login/google')
   @UseGuards(AuthGuard('google'))
@@ -25,25 +21,7 @@ export class AuthController {
     @Req() req: Request & IOAuthUser, //
     @Res() res: Response,
   ) {
-    // 1. 가입확인
-    let user = await this.userService.findOne({ logId: req.user.logId });
-
-    // 2. 회원가입
-    if (!user) {
-      user = await this.userService.createUser({
-        createUserInput: {
-          email: req.user.email,
-          password: req.user.password,
-          phone: req.user.phone,
-          name: req.user.name,
-          logId: req.user.logId,
-          personal: req.user.personal,
-        },
-      });
-    }
-    // 3. 로그인
-    this.authService.setRefreshToken({ user, res });
-    res.redirect('http://localhost:5500/frontend/login/index.html');
+    this.authService.oauthLogin(req, res);
   }
 
   @Get('/login/naver')
@@ -52,25 +30,7 @@ export class AuthController {
     @Req() req: Request & IOAuthUser, //
     @Res() res: Response,
   ) {
-    // 1. 가입확인
-    let user = await this.userService.findOne({ logId: req.user.logId });
-
-    // 2. 회원가입
-    if (!user) {
-      user = await this.userService.createUser({
-        createUserInput: {
-          email: req.user.email,
-          password: req.user.password,
-          phone: req.user.phone,
-          name: req.user.name,
-          logId: req.user.logId,
-          personal: req.user.personal,
-        },
-      });
-    }
-    // 3. 로그인
-    this.authService.setRefreshToken({ user, res });
-    res.redirect('http://localhost:5500/frontend/login/index.html');
+    this.authService.oauthLogin(req, res);
   }
 
   @Get('/login/kakao')
@@ -79,24 +39,6 @@ export class AuthController {
     @Req() req: Request & IOAuthUser, //
     @Res() res: Response,
   ) {
-    // 1. 가입확인
-    let user = await this.userService.findOne({ logId: req.user.logId });
-
-    // 2. 회원가입
-    if (!user) {
-      user = await this.userService.createUser({
-        createUserInput: {
-          email: req.user.email,
-          password: req.user.password,
-          phone: req.user.phone,
-          name: req.user.name,
-          logId: req.user.logId,
-          personal: req.user.personal,
-        },
-      });
-    }
-    // 3. 로그인
-    this.authService.setRefreshToken({ user, res });
-    res.redirect('http://localhost:5500/frontend/login/index.html');
+    this.authService.oauthLogin(req, res);
   }
 }

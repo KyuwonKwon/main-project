@@ -1,6 +1,5 @@
-import { Strategy } from 'passport-kakao';
 import 'dotenv/config';
-declare const JwtKakaoStrategy_base: new (...args: any[]) => Strategy;
+declare const JwtKakaoStrategy_base: new (...args: any[]) => any;
 export declare class JwtKakaoStrategy extends JwtKakaoStrategy_base {
     constructor();
     validate(accessToken: string, refreshToken: string, profile: any): {

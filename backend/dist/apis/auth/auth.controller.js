@@ -15,63 +15,19 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthController = void 0;
 const common_1 = require("@nestjs/common");
 const passport_1 = require("@nestjs/passport");
-const user_service_1 = require("../users/user.service");
 const auth_service_1 = require("./auth.service");
 let AuthController = class AuthController {
-    constructor(userService, authService) {
-        this.userService = userService;
+    constructor(authService) {
         this.authService = authService;
     }
     async loginGoogle(req, res) {
-        let user = await this.userService.findOne({ logId: req.user.logId });
-        if (!user) {
-            user = await this.userService.createUser({
-                createUserInput: {
-                    email: req.user.email,
-                    password: req.user.password,
-                    phone: req.user.phone,
-                    name: req.user.name,
-                    logId: req.user.logId,
-                    personal: req.user.personal,
-                },
-            });
-        }
-        this.authService.setRefreshToken({ user, res });
-        res.redirect('http://localhost:5500/frontend/login/index.html');
+        this.authService.oauthLogin(req, res);
     }
     async loginNaver(req, res) {
-        let user = await this.userService.findOne({ logId: req.user.logId });
-        if (!user) {
-            user = await this.userService.createUser({
-                createUserInput: {
-                    email: req.user.email,
-                    password: req.user.password,
-                    phone: req.user.phone,
-                    name: req.user.name,
-                    logId: req.user.logId,
-                    personal: req.user.personal,
-                },
-            });
-        }
-        this.authService.setRefreshToken({ user, res });
-        res.redirect('http://localhost:5500/frontend/login/index.html');
+        this.authService.oauthLogin(req, res);
     }
     async loginKakao(req, res) {
-        let user = await this.userService.findOne({ logId: req.user.logId });
-        if (!user) {
-            user = await this.userService.createUser({
-                createUserInput: {
-                    email: req.user.email,
-                    password: req.user.password,
-                    phone: req.user.phone,
-                    name: req.user.name,
-                    logId: req.user.logId,
-                    personal: req.user.personal,
-                },
-            });
-        }
-        this.authService.setRefreshToken({ user, res });
-        res.redirect('http://localhost:5500/frontend/login/index.html');
+        this.authService.oauthLogin(req, res);
     }
 };
 __decorate([
@@ -103,8 +59,7 @@ __decorate([
 ], AuthController.prototype, "loginKakao", null);
 AuthController = __decorate([
     (0, common_1.Controller)(),
-    __metadata("design:paramtypes", [user_service_1.UserService,
-        auth_service_1.AuthService])
+    __metadata("design:paramtypes", [auth_service_1.AuthService])
 ], AuthController);
 exports.AuthController = AuthController;
 //# sourceMappingURL=auth.controller.js.map
