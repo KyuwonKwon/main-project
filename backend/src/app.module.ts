@@ -5,6 +5,7 @@ import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './apis/auth/auth.module';
+import { PointTransactionModule } from './apis/pointTransaction/pointTransaction.module';
 import { ProductModule } from './apis/products/product.module';
 import { UserModule } from './apis/users/user.module';
 
@@ -13,6 +14,7 @@ import { UserModule } from './apis/users/user.module';
     AuthModule,
     ProductModule,
     UserModule, // ,
+    PointTransactionModule,
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       autoSchemaFile: 'src/commons/graphql/schema.gql',

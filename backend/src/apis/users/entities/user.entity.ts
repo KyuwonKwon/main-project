@@ -1,6 +1,6 @@
 // user.entity.ts
 
-import { Field, ObjectType, OmitType } from '@nestjs/graphql';
+import { Field, Int, ObjectType, OmitType } from '@nestjs/graphql';
 import {
   Column,
   DeleteDateColumn,
@@ -35,8 +35,12 @@ export class User {
   @Field(() => String)
   logId: string;
 
+  @Column({ default: 0 })
+  @Field(() => Int)
+  point: number;
+
   @Column()
-  @Field(() => String)
+  // @Field(() => String)
   password: string;
 
   @DeleteDateColumn()
