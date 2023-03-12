@@ -117,6 +117,7 @@ type Mutation {
   createUserAddress(userId: String!, createUserAddressInput: CreateUserAddressInput!): UserWithoutPw!
   restoreUser(userId: String!): Boolean!
   createPointTransaction(impUid: String!, amount: Float!): PointTransaction!
+  cancelPointTransaction(id: String!, impUid: String!, amount: Float!): PointTransaction!
 }
 
 input UpdateUserInput {

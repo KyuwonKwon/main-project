@@ -1,4 +1,8 @@
-import { Injectable, UnprocessableEntityException } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  UnprocessableEntityException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CANCELLED } from 'dns';
 import { Repository } from 'typeorm';
@@ -38,8 +42,15 @@ export class PointTransactionService {
     return pointTransaction;
   }
 
+  async checkDuplicate({ impUid }) {
+    if (await this.pointTransactionRepository.findOne({ impUid })) {
+      throw new ConflictException('중복결제 발생 요청종료');
+    }
+  }
   async cancelPayment({ id }) {
-    const selectedPayment = await this.pointTransactionRepository.findOne(id);
+    const selectedPayment = await this.pointTransactionRepository.findOne({
+      id,
+    });
     if (selectedPayment.status === POINT_TRANSACTION_STATUS_ENUM.CANCEL) {
       throw new UnprocessableEntityException('이미 취소되었습니다.');
     }
