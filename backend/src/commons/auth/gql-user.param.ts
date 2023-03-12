@@ -6,6 +6,7 @@ export interface ICurrentUser {
   email: string;
   name?: string;
   password?: string;
+  point?: string;
 }
 export const CurrentUser = createParamDecorator(
   (data, context: ExecutionContext): ICurrentUser => {

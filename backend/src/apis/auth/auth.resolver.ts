@@ -8,7 +8,7 @@ import {
   GqlAuthAccessGuard,
   GqlAuthRefreshGuard,
 } from 'src/commons/auth/gql-auth.guard';
-import { UserWithoutPw } from '../users/entities/user.entity';
+import { User, UserWithoutPw } from '../users/entities/user.entity';
 import { UpdateUserInput } from '../users/dto/updateUser.input';
 
 @Resolver()
@@ -47,13 +47,12 @@ export class AuthResolver {
   }
 
   @UseGuards(GqlAuthAccessGuard)
-  @Query(() => String)
-  fetchLoginUser(
+  @Query(() => User)
+  async fetchLoginUser(
     @CurrentUser() currentUser: any, //
   ) {
-    console.log('fetchUser 실행 완료!!!');
-    console.log('유저정보는??!!!', currentUser);
-    return 'fetchUser 실행 완료!!!';
+    const result = await this.userService.findOne({ logId: currentUser.logId });
+    return result;
   }
 
   @UseGuards(GqlAuthAccessGuard)

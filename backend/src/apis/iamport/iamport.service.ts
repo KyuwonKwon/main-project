@@ -22,7 +22,7 @@ export class IamportService {
     }
   }
 
-  async hasPayment({ impUid, token }) {
+  async checkPaid({ impUid, amount, token }) {
     try {
       const result = await axios({
         url: `https://api.iamport.kr/payments/${impUid}`,
@@ -35,7 +35,7 @@ export class IamportService {
         },
       });
 
-      if (result.data.response.status !== 'paid') {
+      if (result.data.response.amount !== amount) {
         throw new UnprocessableEntityException('유효하지 않은 결제입니다.');
       }
     } catch (error) {
@@ -47,6 +47,31 @@ export class IamportService {
       } else {
         throw error;
       }
+    }
+  }
+
+  async cancel({ impUid, token }) {
+    try {
+      const result = await axios({
+        url: 'https://api.iamport.kr/payments/cancel',
+        method: 'post',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`, // 포트원 서버로부터 발급받은 엑세스 토큰
+        },
+        data: {
+          // reason, // 가맹점 클라이언트로부터 받은 환불사유
+          imp_uid: impUid, // imp_uid를 환불 `unique key`로 입력
+          // amount: cancel_request_amount, // 가맹점 클라이언트로부터 받은 환불금액
+          // checksum: cancelableAmount, // [권장] 환불 가능 금액 입력
+        },
+      });
+      return result.data.response.cancel_amount;
+    } catch (error) {
+      throw new HttpException(
+        error.response.data.message,
+        error.response.status,
+      );
     }
   }
 }

@@ -96,7 +96,7 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 scalar DateTime
 
 type Query {
-  fetchLoginUser: String!
+  fetchLoginUser: User!
   fetchProducts: [Product!]!
   fetchProductsWithDeleted: [Product!]!
   fetchProduct(productId: String!): Product!
@@ -117,7 +117,7 @@ type Mutation {
   createUserAddress(userId: String!, createUserAddressInput: CreateUserAddressInput!): UserWithoutPw!
   restoreUser(userId: String!): Boolean!
   createPointTransaction(impUid: String!, amount: Float!): PointTransaction!
-  cancelPointTransaction(id: String!, impUid: String!, amount: Float!): PointTransaction!
+  cancelPointTransaction(impUid: String!): PointTransaction!
 }
 
 input UpdateUserInput {
