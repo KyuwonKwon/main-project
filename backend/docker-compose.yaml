@@ -6,7 +6,7 @@ services:
       context: .
       dockerfile: Dockerfile
     volumes:
-      - ./:/myfolder/
+      - ./src/:/myfolder/src/
     ports:
       - 3000:3000
 
@@ -14,6 +14,7 @@ services:
     restart: always
     image: mysql:latest
     environment:
+      MYSQL_DATABASE: homework
       MYSQL_ROOT_PASSWORD: 12121212
     ports:
       - 3306:3306

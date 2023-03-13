@@ -40,7 +40,7 @@ export class User {
   point: number;
 
   @Column()
-  // @Field(() => String)
+  @Field(() => String)
   password: string;
 
   @DeleteDateColumn()

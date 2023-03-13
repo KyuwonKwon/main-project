@@ -10,6 +10,7 @@ type User {
   personal: String!
   logId: String!
   point: Int!
+  password: String!
 }
 
 type UserWithoutPw {
@@ -126,6 +127,7 @@ input UpdateUserInput {
   email: String
   personal: String
   logId: String
+  password: String
 }
 
 input CreateProductInput {
@@ -180,6 +182,7 @@ input CreateUserInput {
   email: String!
   personal: String!
   logId: String!
+  password: String!
 }
 
 input CreateUserAddressInput {
